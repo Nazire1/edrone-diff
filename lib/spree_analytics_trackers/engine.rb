@@ -1,8 +1,8 @@
-module SpreeAnalyticsTrackers
+module SpreeEdrone
   class Engine < Rails::Engine
     require 'spree/core'
     isolate_namespace Spree
-    engine_name 'spree_analytics_trackers'
+    engine_name 'spree_edrone'
 
     # use rspec for tests
     config.generators do |g|

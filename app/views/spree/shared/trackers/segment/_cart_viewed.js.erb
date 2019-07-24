@@ -1,22 +1,32 @@
-<script>
-  if (typeof analytics !== 'undefined') {
-    analytics.track('Cart Viewed', {
-      cart_id: '<%= @order.number %>',
-      products: [
-      <% @order.line_items.each_with_index do |line_item, index| %>
-        <%= product_for_segment(line_item, position: index+1, quantity: line_item.quantity) %>,
-      <% end %>
-      ]
-    });
-
-    analytics.page('Cart Viewed', {
-      cart_id: '<%= @order.number %>',
-      products: [
-      <% @order.line_items.each_with_index do |line_item, index| %>
-        <%= product_for_segment(line_item, position: index+1, quantity: line_item.quantity) %>,
-      <% end %>
-      ]
-    });
-
-  }
-</script>
+<% if Spree::Edrone.current and Spree::Edrone.current.active %>
+  <script>
+    !(function() {
+      window._edrone = window._edrone || {};
+      let edrone_cart = [
+        <% @order.line_items.each_with_index do |line_item, index| %>
+          <%= product_for_segment(line_item) %>,
+        <% end %>  ];
+      var current_product_ids = edrone_cart.map((product) => product.product_id);
+      var previous_product_ids = JSON.parse(localStorage.getItem('edrone_products_added_to_cart') !== null ? localStorage.getItem('edrone_products_added_to_cart') : '[]')
+      let diff = current_product_ids.filter(x => !previous_product_ids.includes(x));
+      if (diff.length !== 0) {
+        edrone_cart.map((product) => {
+          if(product.product_id == diff[0]) {
+            window._edrone_send_handler = function () {
+              _edrone.first_run = false;
+              _edrone.product_skus = product.sku;
+              _edrone.product_ids = product.product_id;
+              _edrone.product_titles = product.name; 
+              _edrone.product_urls = product.url;
+              _edrone.product_category_ids = product.category_id;
+              _edrone.product_category_names = product.category;
+              _edrone.action_type = 'add_to_cart';
+              _edrone.init();
+            };
+          }
+        })
+      }
+      localStorage.setItem('edrone_products_added_to_cart', JSON.stringify(current_product_ids));
+    })()
+  </script>
+<% end %>
