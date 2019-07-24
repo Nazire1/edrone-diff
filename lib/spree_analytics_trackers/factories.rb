@@ -1,9 +1,9 @@
-unless FactoryBot.factories.registered?(:edrone)
+unless FactoryBot.factories.registered?(:tracker)
   FactoryBot.define do
-    factory :edrone, class: Spree::Edrone do
-      edrone_app_id { '' }
-      edrone_app_secret { '' }
+    factory :tracker, class: Spree::Tracker do
+      analytics_id { 'A100' }
       active { true }
+      engine { :google_analytics }
     end
   end
 end

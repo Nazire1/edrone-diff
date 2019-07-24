@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    class EdronesController < ResourceController
+    class TrackersController < ResourceController
     end
   end
 end

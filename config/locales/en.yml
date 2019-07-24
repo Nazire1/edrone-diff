@@ -1,7 +1,20 @@
 en:
+  activerecord:
+    attributes:
+      spree/tracker:
+        one: Tracker
+        other: Trackers
   spree:
-    new_edrone: New Edrone
-    app_id: edrone App ID
-    app_secret: edrone APP Secret
-    edrone_module: Edrone Module
-    integrate_with_edrone: Integrate with edrone
+    analytics_engine: Analytics Engine
+    analytics_trackers: Analytics Trackers
+    new_tracker: New Tracker
+    google_analytics: Google Analytics
+    google_analytics_id: Analytics ID
+    analytics_desc_header_1: Spree Analytics
+    analytics_desc_header_2: Live analytics integrated into your Spree dashboard
+    analytics_desc_list_1: Get live sales information as it happens
+    analytics_desc_list_2: Requires only a free Spree account to activate
+    analytics_desc_list_3: Absolutely no code to install
+    analytics_desc_list_4: It's completely free!
+    analytics_engine: Analytics Engine
+    analytics_trackers: Analytics Trackers

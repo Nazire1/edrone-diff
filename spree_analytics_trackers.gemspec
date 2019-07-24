@@ -1,20 +1,20 @@
 lib = File.expand_path('../lib/', __FILE__)
 $LOAD_PATH.unshift lib unless $LOAD_PATH.include?(lib)
 
-require 'spree_edrone/version'
+require 'spree_analytics_trackers/version'
 
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = 'spree_edrone'
-  s.version     = SpreeEdrone.version
-  s.summary     = 'Adds edrone integration with Spree'
-  s.description = 'Supports Edrone'
+  s.name        = 'spree_analytics_trackers'
+  s.version     = SpreeAnalyticsTrackers.version
+  s.summary     = 'Adds analytics trackers functionality to Spree'
+  s.description = 'Supports Google Analytics '
   s.required_ruby_version = '>= 2.2.7'
 
-  s.author    = 'edrone'
-  s.email     = 'admin@edrone.me'
-  s.homepage  = 'https://edrone.me'
-  s.license = 'MIT'
+  s.author    = 'Spark Solutions'
+  s.email     = 'we@sparksolutions.co'
+  s.homepage  = 'https://github.com/spree-contrib/spree_analytics_trackers'
+  s.license = 'BSD-3-Clause'
 
   s.files        = `git ls-files`.split("\n")
   s.test_files   = `git ls-files -- spec/*`.split("\n")

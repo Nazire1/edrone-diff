@@ -1,5 +1,5 @@
 Spree.user_class.class_eval do
-  def edrone_app_id
+  def analytics_id
     id
   end
 end

@@ -1,38 +1,34 @@
 <div data-hook="admin_tracker_form_fields" class="row">
-  <div class="col-xs-12 col-md-4">
-    <div class="row">
-      <div class="col-xs-12" data-hook="edrone_app_id">
-        <%= f.field_container :edrone_app_id, class: ["form-group"], "data-hook" => "edrone_app_id" do %>
-          <%= f.label :edrone_app_id, Spree.t(:app_id) %>
-          <%= f.text_field :edrone_app_id, class: 'form-control' %>
-          <%= f.error_message_on :edrone_app_id %>
-        <% end %>
-      </div>
-      <div class="col-xs-12" data-hook="edrone_app_secret">
-        <%= f.field_container :edrone_app_secret, class: ["form-group"], "data-hook" => "edrone_app_secret" do %>
-          <%= f.label :edrone_app_secret, Spree.t(:app_secret) %>
-          <%= f.text_field :edrone_app_secret, class: 'form-control' %>
-          <%= f.error_message_on :edrone_app_secret %>
-        <% end %>
-      </div>
-    </div>
+  <div class="col-xs-12 col-md-4" data-hook="analytics_engine">
+    <%= f.field_container :engine, class: ["form-group"], "data-hook" => "analytics_engine" do %>
+      <%= f.label :engine, Spree.t(:analytics_engine) %>
+      <%= f.select :engine, Spree::Tracker.engines.keys.sort.map { |k| [k.humanize, k] }, {}, { class: 'select2' } %>
+      <%= f.error_message_on :engine %>
+    <% end %>
   </div>
   <div class="col-xs-12 col-md-8">
     <div data-hook="active" class="form-group">
       <%= label_tag nil, Spree.t(:active) %>
       <div class="radio">
-        <%= label_tag :edrone_active_true do %>
-          <%= radio_button(:edrone, :active, true) %>
+        <%= label_tag :tracker_active_true do %>
+          <%= radio_button(:tracker, :active, true) %>
           <%= Spree.t(:say_yes) %>
         <% end %>
       </div>
       <div class="radio">
-        <%= label_tag :edrone_active_false do %>
-          <%= radio_button(:edrone, :active, false) %>
+        <%= label_tag :tracker_active_false do %>
+          <%= radio_button(:tracker, :active, false) %>
           <%= Spree.t(:say_no) %>
         <% end %>
       </div>
     </div>
+  </div>
+  <div class="col-xs-12 col-md-4" data-hook="analytics_id">
+    <%= f.field_container :analytics_id, class: ["form-group"], "data-hook" => "analytics_id" do %>
+      <%= f.label :analytics_id, Spree.t(:google_analytics_id) %>
+      <%= f.text_field :analytics_id, class: 'form-control' %>
+      <%= f.error_message_on :analytics_id %>
+    <% end %>
   </div>
   <div data-hook="additional_tracker_fields"></div>
 </div>
