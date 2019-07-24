@@ -1,12 +1,13 @@
 <% content_for :page_title do %>
-  <%= Spree.t(:analytics_trackers) %>
+  <%= Spree.t(:edrone_module) %>
 <% end %>
-
 <% content_for :page_actions do %>
-  <%= button_link_to Spree.t(:new_tracker), new_object_url, class: "btn-success", icon: 'add', id: 'admin_new_tracker_link' %>
-<% end if can? :create, Spree::Tracker %>
+  <% if !@edrones.any? %>
+    <%= button_link_to Spree.t(:integrate_with_edrone), new_object_url, class: "btn-success", icon: 'add', id: 'admin_new_tracker_link' %>
+  <% end %>
+<% end if can? :create, Spree::Edrone %>
 
-<% if @trackers.any? %>
+<% if @edrones.any? %>
   <table class="table">
     <colgroup>
       <col style="width: 30%">
@@ -16,21 +17,20 @@
     </colgroup>
     <thead>
       <tr data-hook="admin_trackers_index_headers">
-        <th><%= Spree.t(:google_analytics_id) %></th>
-        <th><%= Spree.t(:analytics_engine) %></th>
+        <th><%= Spree.t(:app_id) %></th>
+        <th><%= Spree.t(:app_secret) %></th>
         <th class="text-center"><%= Spree.t(:active) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
     <tbody>
-      <% @trackers.each do |tracker|%>
-        <tr id="<%= spree_dom_id tracker %>" data-hook="admin_trackers_index_rows">
-          <td><%= tracker.analytics_id %></td>
-          <td><%= tracker.engine.humanize %></td>
-          <td class="text-center"><%= tracker.active ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
+      <% @edrones.each do |edrone|%>
+        <tr id="<%= spree_dom_id edrone %>" data-hook="admin_trackers_index_rows">
+          <td><%= edrone.edrone_app_id %></td>
+          <td><%= edrone.edrone_app_secret %></td>
+          <td class="text-center"><%= edrone.active ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td class="actions text-right">
-            <%= link_to_edit(tracker, no_text: true) if can? :edit, tracker %>
-            <%= link_to_delete(tracker, no_text: true) if can? :delete, tracker %>
+            <%= link_to_edit(edrone, no_text: true) if can? :edit, edrone %>
           </td>
         </tr>
       <% end %>
@@ -38,7 +38,6 @@
   </table>
 <% else %>
   <div class="alert alert-warning">
-    <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::Tracker)) %>,
-    <%= link_to(Spree.t(:add_one), new_object_url) if can? :create, Spree::Tracker %>!
+    <%= link_to(Spree.t(:integrate_with_edrone), new_object_url) if can? :create, Spree::Edrone %>!
   </div>
 <% end %>
