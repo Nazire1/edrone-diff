@@ -1,48 +1,29 @@
-<% if order_just_completed?(@order) %>
-  <script>
-    if (typeof analytics !== 'undefined') {
-      analytics.track('Order Completed', {
-        order_id: '<%= @order.number %>',
-        total: <%= @order.total %>,
-        shipping: <%= @order.shipment_total %>,
-        tax: <%= @order.additional_tax_total %>,
-        discount: <%= @order.promo_total %>,
-        coupon: '<%= @order.promo_code %>',
-        currency: '<%= @order.currency %>',
-        products: [
-        <% @order.line_items.each do |line_item| %>
-          {
-            product_id: '<%= line_item.product.id %>',
-            sku: '<%= line_item.variant.sku %>',
-            name: '<%= line_item.product.name %>',
-            price: <%= line_item.price %>,
-            quantity: <%= line_item.quantity %>
-          },
-        <% end %>
-        ]
-      });
-
-      analytics.page('Order Completed', {
-        order_id: '<%= @order.number %>',
-        total: <%= @order.total %>,
-        shipping: <%= @order.shipment_total %>,
-        tax: <%= @order.additional_tax_total %>,
-        discount: <%= @order.promo_total %>,
-        coupon: '<%= @order.promo_code %>',
-        currency: '<%= @order.currency %>',
-        products: [
-        <% @order.line_items.each do |line_item| %>
-          {
-            product_id: '<%= line_item.product.id %>',
-            sku: '<%= line_item.variant.sku %>',
-            name: '<%= line_item.product.name %>',
-            price: <%= line_item.price %>,
-            quantity: <%= line_item.quantity %>
-          },
-        <% end %>
-        ]
-      });
-
-    }
+<% if Spree::Edrone.current and Spree::Edrone.current.active %>
+  <script type="text/javascript">
+    !(function() {
+      window._edrone = window._edrone || {};
+      let edrone_products = [
+      <% @order.line_items.each_with_index do |line_item, index| %>
+        <%= product_for_segment(line_item, quantity: line_item.quantity) %>,
+      <% end %>  ];
+        _edrone.action_type = 'order';
+        _edrone.email = '<%= @order.email %>';
+        _edrone.first_name = '<%= @order.bill_address.firstname %>';
+        _edrone.last_name = '<%= @order.bill_address.lastname %>';
+        _edrone.product_skus = edrone_products.map(product => product.sku).join('|'); 
+        _edrone.product_ids = edrone_products.map(product => product.product_id).join('|');
+        _edrone.product_titles = edrone_products.map(product => product.name).join('|');
+        _edrone.product_urls = edrone_products.map(product => product.url).join('|');
+        _edrone.product_category_ids = edrone_products.map(product => product.category_id).join('|');
+        _edrone.product_category_names = edrone_products.map(product => product.category).join('|');
+        _edrone.product_counts = edrone_products.map(product => product.quantity).join('|');
+        _edrone.order_id = '<%= @order.number %>';
+        _edrone.coupon = '<%= @order.promo_code %>';
+        _edrone.city = '<%= @order.bill_address.city %>';
+        _edrone.base_currency = '<%= @order.currency %>';
+        _edrone.order_currency = '<%= @order.currency %>';
+        _edrone.base_payment_value = '<%= @order.total %>';
+        _edrone.order_payment_value = '<%= @order.total %>';
+    })()
   </script>
 <% end %>

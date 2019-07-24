@@ -1,11 +1,10 @@
 <% content_for :page_title do %>
-  <%= link_to Spree.t(:analytics_trackers), spree.admin_trackers_url %> /
-  <%= @tracker.analytics_id %>
+  <%= link_to Spree.t(:edrone_module), spree.admin_edrones_url %>
 <% end %>
 
-<%= render partial: 'spree/admin/shared/error_messages', locals: { target: @tracker } %>
+<%= render partial: 'spree/admin/shared/error_messages', locals: { target: @edrone } %>
 
-<%= form_for [:admin, @tracker] do |f| %>
+<%= form_for [:admin, @edrone] do |f| %>
   <fieldset>
     <%= render partial: 'form', locals: { f: f } %>
     <%= render partial: 'spree/admin/shared/edit_resource_links' %>
